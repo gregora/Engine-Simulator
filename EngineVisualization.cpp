@@ -26,7 +26,7 @@ void EngineVisualization::update() {
     volume.setSize(sf::Vector2f(50, (engine.piston_length * 500 - x)));
     volume.setPosition(0, (int)(- engine.piston_length * 500));
 
-    int T = engine.temperature - 273;
+    int T = (engine.temperature - 273) / 2;
 
     if (T > 255){
         T = 255;
