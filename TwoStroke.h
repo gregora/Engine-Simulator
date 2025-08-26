@@ -1,3 +1,6 @@
+#ifndef TWO_STROKE_H
+#define TWO_STROKE_H
+
 #include "math.h"
 
 #define ambient_pressure 101325.0
@@ -27,3 +30,5 @@ public:
 
 private:
 };
+
+#endif // TWO_STROKE_H
