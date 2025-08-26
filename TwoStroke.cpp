@@ -22,8 +22,9 @@ void TwoStroke::update(float dt) {
     float dV = - dx * piston_area; // Change in volume
 
     float dT = - R_spec * temperature * dV / (V*c_v); // Change in temperature
+    temperature += dT;
+
     pressure = (air_density * R_spec * temperature); // Ideal gas law
 
-    temperature += dT;
 
 }

@@ -14,4 +14,6 @@ private:
     TwoStroke& engine;
     sf::RectangleShape piston;
     sf::RectangleShape volume;
+    sf::RectangleShape crank;
+    sf::CircleShape crank_circle;
 };

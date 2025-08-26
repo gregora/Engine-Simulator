@@ -6,12 +6,13 @@
 int main(){
     TwoStroke engine;
 
-    engine.apply_torque(50.0);
-
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
 
     visualization.setPosition(400, 300);
+
+    float t = 0;
+    float dt = 0.0003f;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -20,15 +21,23 @@ int main(){
                 window.close();
         }
 
-        // sleep
-        sf::sleep(sf::milliseconds(30));
+        if (t < 1.0f) {
+            engine.apply_torque(500.0f);
+        }else{
+            engine.apply_torque(0.0f);
+        }
 
-        engine.update(0.016f); // Update the engine simulation
+        engine.update(dt); // Update the engine simulation
         visualization.update();  // Update the visualization
+
+        // sleep
+        sf::sleep(sf::milliseconds(1));
 
         window.clear();
         window.draw(visualization);
         window.display();
+    
+        t += dt;
     }
 
     return 0;
