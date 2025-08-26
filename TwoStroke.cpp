@@ -9,9 +9,8 @@ void TwoStroke::update(float dt) {
     // Update the engine's state based on the applied torque and other factors
 
     float piston_force = (pressure - ambient_pressure) * piston_area;
-    printf("Piston Force: %f\n", piston_force);
 
-    float total_torque = -piston_force*crank_radius*cos(angle) + external_torque;
+    float total_torque = -piston_force*crank_radius*cos(angle) + external_torque - (flywheel_damping * angular_velocity);
 
     angular_velocity += (total_torque / flywheel_inertia) * dt;
     angle += angular_velocity * dt;

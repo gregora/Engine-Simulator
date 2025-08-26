@@ -6,7 +6,7 @@ int main(){
 
     engine.apply_torque(100.0);
     
-    for(int i = 0; i < 1000; i++){
+    for(int i = 0; i < 10000; i++){
         engine.update(0.0001);
         //engine.apply_torque(0);
 
