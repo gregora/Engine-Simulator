@@ -13,4 +13,5 @@ protected:
 private:
     TwoStroke& engine;
     sf::RectangleShape piston;
+    sf::RectangleShape volume;
 };
