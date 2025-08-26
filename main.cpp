@@ -9,10 +9,16 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
 
+    sf::Text time_text;
+
     visualization.setPosition(400, 300);
 
     float t = 0;
-    float dt = 0.0003f;
+    float dt = 0.000003f;
+
+    float playback_speed = 0.1f;
+
+    float framerate = 60;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -27,13 +33,18 @@ int main(){
             engine.apply_torque(0.0f);
         }
 
-        engine.update(dt); // Update the engine simulation
-        visualization.update();  // Update the visualization
+        int updates = (float) (playback_speed / framerate / dt);
+
+        for (int i = 0; i < updates; i++) {
+            engine.update(dt);
+        }
 
         // sleep
-        sf::sleep(sf::milliseconds(1));
+        sf::sleep(sf::milliseconds(16));
 
+        visualization.update();  // Update the visualization
         window.clear();
+    
         window.draw(visualization);
         window.display();
     

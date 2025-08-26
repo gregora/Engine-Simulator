@@ -24,6 +24,19 @@ void TwoStroke::update(float dt) {
     float dT = - R_spec * temperature * dV / (V*c_v); // Change in temperature
     temperature += dT;
 
+    float cycle_position = fmod(angle, 2 * M_PI);
+
+    // explosion
+    if(cycle_position > M_PI / 2 && cycle_position < M_PI + 0.05) {
+        temperature = 10000;
+    }
+
+    // exhaust
+    if(cycle_position > 3 * M_PI / 2 && cycle_position < 3 * M_PI / 2 + 0.05) {
+        temperature = 298;
+        pressure = ambient_pressure;
+    }
+
     pressure = (air_density * R_spec * temperature); // Ideal gas law
 
 
