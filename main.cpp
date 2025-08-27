@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
+#include "gauge.h"
 
 int main(){
     TwoStroke engine;
@@ -9,6 +10,9 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
 
+    Gauge g("RPM", 0, 6000);
+    g.setPosition(30, 400);
+    g.scale(0.4f, 0.4f);
 
     sf::Font font;
     font.loadFromFile("fonts/Prototype.ttf");
@@ -17,12 +21,6 @@ int main(){
     time_text.setCharacterSize(24);
     time_text.setFillColor(sf::Color::White);
     time_text.setPosition(10, 10);
-
-    sf::Text rpm;
-    rpm.setFont(font);
-    rpm.setCharacterSize(18);
-    rpm.setFillColor(sf::Color::White);
-    rpm.setPosition(10, 40);
 
     visualization.setPosition(400, 300);
 
@@ -57,14 +55,15 @@ int main(){
         sf::sleep(sf::milliseconds(16));
 
         time_text.setString("Time: " + std::to_string(t) + "s");
-        rpm.setString("RPM: " + std::to_string((int) (30 * engine.angular_velocity / M_PI)));
+
+        g.value = 30 * engine.angular_velocity / M_PI;
 
         visualization.update();  // Update the visualization
         window.clear();
     
         window.draw(visualization);
         window.draw(time_text);
-        window.draw(rpm);
+        window.draw(g);
         window.display();
     
         t += dt;

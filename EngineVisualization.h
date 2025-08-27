@@ -16,4 +16,5 @@ private:
     sf::RectangleShape volume;
     sf::RectangleShape crank;
     sf::CircleShape crank_circle;
+    sf::RectangleShape cilinder;
 };
