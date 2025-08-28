@@ -28,7 +28,7 @@ void TwoStroke::update(float dt) {
 
     // explosion
     if(cycle_position > M_PI / 2 && cycle_position < M_PI + 0.05) {
-        temperature = 8000;
+        temperature = 2000;
     }
 
     // exhaust

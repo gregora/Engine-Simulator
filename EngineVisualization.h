@@ -7,6 +7,8 @@ public:
 
     void update();
 
+    float piston_height = 0.04f;
+
 protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

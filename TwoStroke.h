@@ -20,13 +20,13 @@ public:
     float temperature = 298.0; // kelvin
     float pressure = ambient_pressure; // pascals
 
-    float cilinder_height = 0.12; // meters
-    float crank_radius = 0.05; // meters
-    float piston_area = 0.01; // square meters
+    float cilinder_height = 0.08; // meters
+    float crank_radius = 0.03; // meters
+    float piston_area = 0.003; // square meters
 
-    float flywheel_inertia = 5; // kg*m^2
+    float flywheel_inertia = 0.2; // kg*m^2
 
-    float flywheel_damping = 4; // Damping coefficient for the flywheel
+    float flywheel_damping = 0.2; // Damping coefficient for the flywheel
 
 private:
 };
