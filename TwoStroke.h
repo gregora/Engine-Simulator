@@ -26,7 +26,7 @@ public:
 
     float flywheel_inertia = 0.2; // kg*m^2
 
-    float flywheel_damping = 0.2; // Damping coefficient for the flywheel
+    float flywheel_damping = 0.03; // Damping coefficient for the flywheel
 
 private:
 };

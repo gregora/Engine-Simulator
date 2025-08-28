@@ -9,7 +9,7 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
     cilinder.setOrigin(500 * piston_width / 2, 0);
     cilinder.setFillColor(sf::Color(5, 5, 5));
     cilinder.setPosition(0, 0);
-    cilinder.setOutlineThickness(15);
+    cilinder.setOutlineThickness(500 * piston_width / 3);
     cilinder.setOutlineColor(sf::Color(25, 25, 25));
 
     piston.setSize(sf::Vector2f(500 * piston_width, 500 * piston_height));
@@ -19,8 +19,8 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
     volume.setOrigin(500 * piston_width / 2, 0);
 
     crank.setFillColor(sf::Color(70, 70, 70));
-    crank.setSize(sf::Vector2f(10.0f/500 * 500, - engine.cilinder_height * 500 - 2 * engine.crank_radius * 500));
-    crank.setOrigin(5, 0);
+    crank.setSize(sf::Vector2f(piston_width / 5 * 500, - engine.cilinder_height * 500 - 2 * engine.crank_radius * 500));
+    crank.setOrigin(piston_width / 10 * 500, 0);
 
     counterweight_texture.loadFromFile("textures/counterweight.png");
 
@@ -49,7 +49,7 @@ void EngineVisualization::update() {
 
     counterweight.setRotation(- engine.angle * 180 / M_PI);
 
-    int T = (engine.temperature - 273) / 2;
+    int T = (engine.temperature - 273) / 2.0f;
 
     if (T > 255){
         T = 255;

@@ -48,7 +48,7 @@ int main(){
         }
 
         if (t < 1.0f) {
-            engine.apply_torque(30.0f);
+            engine.apply_torque(20.0f);
         }else{
             engine.apply_torque(0.0f);
         }
