@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
-#include "gauge.h"
+#include "include/ui.h"
 
 int main(){
     TwoStroke engine;

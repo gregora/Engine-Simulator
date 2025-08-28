@@ -1,8 +1,8 @@
-all: TwoStroke.o main.o EngineVisualization.o gauge.o
-	g++ -o main.out TwoStroke.o EngineVisualization.o main.o gauge.o -lsfml-graphics -lsfml-window -lsfml-system
+all: TwoStroke.o main.o EngineVisualization.o ui.o
+	g++ -o main.out TwoStroke.o EngineVisualization.o main.o ui.o -lsfml-graphics -lsfml-window -lsfml-system
 
-gauge.o: gauge.cpp gauge.h
-	g++ -c gauge.cpp -lsfml-graphics -lsfml-window -lsfml-system
+ui.o: src/ui.cpp include/ui.h
+	g++ -c src/ui.cpp -lsfml-graphics -lsfml-window -lsfml-system
 
 TwoStroke.o: TwoStroke.cpp TwoStroke.h
 	g++ -c TwoStroke.cpp
