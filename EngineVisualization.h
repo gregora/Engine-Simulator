@@ -15,6 +15,7 @@ private:
     sf::RectangleShape piston;
     sf::RectangleShape volume;
     sf::RectangleShape crank;
-    sf::CircleShape crank_circle;
+    sf::Sprite counterweight;
+    sf::Texture counterweight_texture;
     sf::RectangleShape cilinder;
 };

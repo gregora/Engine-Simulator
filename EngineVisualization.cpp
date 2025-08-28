@@ -12,10 +12,14 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
     crank.setSize(sf::Vector2f(10, engine.cilinder_height * 500 + engine.crank_radius * 500));
     crank.setOrigin(5, engine.cilinder_height * 250 + engine.crank_radius * 250);
 
-    crank_circle.setRadius(engine.crank_radius * 500);
-    crank_circle.setOrigin(engine.crank_radius * 500, engine.crank_radius * 500);
-    crank_circle.setFillColor(sf::Color(50, 50, 50));
-    crank_circle.setPosition(0, engine.cilinder_height * 500 + engine.crank_radius * 500 - 7);
+    counterweight_texture.loadFromFile("textures/counterweight.png");
+
+    counterweight.setTexture(counterweight_texture);
+    counterweight.setOrigin(counterweight_texture.getSize().x / 2, counterweight_texture.getSize().y / 2);
+
+    float counterweight_scale = 500 * 2 * engine.crank_radius / counterweight_texture.getSize().y;
+    counterweight.setScale(counterweight_scale, counterweight_scale);
+    counterweight.setPosition(0, engine.cilinder_height * 500 + engine.crank_radius * 500 - 7);
 
     cilinder.setSize(sf::Vector2f(50, engine.cilinder_height * 500 + engine.crank_radius * 1000));
     cilinder.setOrigin(25, 0);
@@ -35,7 +39,9 @@ void EngineVisualization::update() {
     float crank_angle = atan2(engine.cilinder_height, engine.crank_radius * cos(engine.angle) * 0.7);
 
     crank.setRotation(crank_angle * 180 / M_PI + 90);
-    crank.setPosition(cos(crank_angle) * engine.crank_radius * 500, engine.cilinder_height * 500 - x);
+    crank.setPosition(cos(crank_angle) * engine.crank_radius * 500, engine.cilinder_height * 500 - x - engine.crank_radius);
+
+    counterweight.setRotation(- engine.angle * 180 / M_PI);
 
     int T = (engine.temperature - 273) / 2;
 
@@ -56,6 +62,6 @@ void EngineVisualization::draw(sf::RenderTarget& target, sf::RenderStates states
     target.draw(crank, states);
     target.draw(piston, states);
     target.draw(volume, states);
-    target.draw(crank_circle, states);
+    target.draw(counterweight, states);
 
 }
