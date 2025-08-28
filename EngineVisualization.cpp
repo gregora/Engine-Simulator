@@ -11,12 +11,11 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
     crank.setFillColor(sf::Color(70, 70, 70));
     crank.setSize(sf::Vector2f(10, engine.piston_length * 500 + engine.crank_radius * 500));
     crank.setOrigin(5, engine.piston_length * 250 + engine.crank_radius * 250);
-    crank.setPosition(0, 15);
 
     crank_circle.setRadius(engine.crank_radius * 500);
     crank_circle.setOrigin(engine.crank_radius * 500, engine.crank_radius * 500);
     crank_circle.setFillColor(sf::Color(50, 50, 50));
-    crank_circle.setPosition(0, 50 + engine.crank_radius * 500);
+    crank_circle.setPosition(0, engine.piston_length * 500 + engine.crank_radius * 500 - 7);
 
     cilinder.setSize(sf::Vector2f(50, engine.piston_length * 500 + engine.crank_radius * 1000));
     cilinder.setOrigin(25, 0);
@@ -32,6 +31,11 @@ void EngineVisualization::update() {
 
     volume.setSize(sf::Vector2f(50, (engine.piston_length * 500 - x)));
     volume.setPosition(0, (int)(- engine.piston_length * 500));
+
+    float crank_angle = atan2(engine.piston_length, engine.crank_radius * cos(engine.angle) * 0.7);
+
+    crank.setRotation(crank_angle * 180 / M_PI + 90);
+    crank.setPosition(cos(crank_angle) * engine.crank_radius * 500, engine.piston_length * 500 - x);
 
     int T = (engine.temperature - 273) / 2;
 
