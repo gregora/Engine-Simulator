@@ -11,8 +11,8 @@ int main(){
     EngineVisualization visualization(engine);
 
     Gauge g("RPM", 0, 6000);
-    g.setPosition(30, 400);
-    g.scale(0.4f, 0.4f);
+    g.setPosition(30, 420);
+    g.scale(0.35f, 0.35f);
 
     sf::Font font;
     font.loadFromFile("fonts/Prototype.ttf");
