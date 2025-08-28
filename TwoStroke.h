@@ -20,7 +20,7 @@ public:
     float temperature = 298.0; // kelvin
     float pressure = ambient_pressure; // pascals
 
-    float piston_length = 0.12; // meters
+    float cilinder_height = 0.12; // meters
     float crank_radius = 0.05; // meters
     float piston_area = 0.01; // square meters
 

@@ -18,7 +18,7 @@ void TwoStroke::update(float dt) {
     float  x = (1 + sin(angle)) * crank_radius;
     float dx = cos(angle)* angular_velocity * crank_radius * dt;
 
-    float  V = (piston_length - x) * piston_area;
+    float  V = (cilinder_height - x) * piston_area;
     float dV = - dx * piston_area; // Change in volume
 
     float dT = - R_spec * temperature * dV / (V*c_v); // Change in temperature
