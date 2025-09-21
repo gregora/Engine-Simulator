@@ -14,7 +14,8 @@ public:
     void init();
     void apply_torque(float torque);
     void update(float dt);
-    void valves();
+
+    virtual void valves();
 
     float angle = 0.0;
     float angular_velocity = 0.0;
@@ -32,10 +33,6 @@ public:
     float flywheel_inertia = 0.1; // kg*m^2
 
     float flywheel_damping = 0.01; // Damping coefficient for the flywheel
-
-private:
-    float fuel_injection_mass = 0.0; // kg
-    bool fuel_injected = false;
 };
 
 #endif // ENGINE_H

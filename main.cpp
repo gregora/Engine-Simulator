@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "TwoStroke.h"
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
@@ -11,10 +12,11 @@ int main(){
 
 
     // Yamaha RX100 engine parameters
-    Engine engine;
+    TwoStroke engine;
     engine.piston_area = 0.00196;
     engine.crank_radius = 0.025;
     engine.cilinder_height = 0.0583;
+    engine.fuel_injection_mass = 3.08641975e-7;
     engine.init();
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
