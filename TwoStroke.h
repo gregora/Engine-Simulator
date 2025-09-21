@@ -14,6 +14,7 @@ public:
     void init();
     void apply_torque(float torque);
     void update(float dt);
+    void valves();
 
     float angle = 0.0;
     float angular_velocity = 0.0;

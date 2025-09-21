@@ -42,6 +42,14 @@ void TwoStroke::update(float dt) {
     float dT = - R_spec * temperature * dV / (V*c_v); // Change in temperature
     temperature += dT;
 
+    valves();
+
+}
+
+void TwoStroke::valves(){
+    float  x = (1 + sin(angle)) * crank_radius;
+    float  V = (cilinder_height - x) * piston_area;
+
     float cycle_position = fmod(angle, 2 * M_PI);
 
     // explosion
@@ -61,7 +69,4 @@ void TwoStroke::update(float dt) {
     if(cycle_position >= M_PI) {
         fuel_injected = false;
     }
-
-
-
 }
