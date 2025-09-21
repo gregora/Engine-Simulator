@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "TwoStroke.h"
+#include "FourStroke.h"
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
@@ -12,7 +13,7 @@ int main(){
 
 
     // Yamaha RX100 engine parameters
-    TwoStroke engine;
+    FourStroke engine;
     engine.piston_area = 0.00196;
     engine.crank_radius = 0.025;
     engine.cilinder_height = 0.0583;

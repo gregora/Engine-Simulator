@@ -36,7 +36,7 @@ void Engine::update(float dt) {
     angular_velocity += (total_torque / flywheel_inertia) * dt;
     angle += angular_velocity * dt;
 
-    float dT = - R_spec * temperature * dV / (V*c_v); // Change in temperature
+    float dT = - (pressure * dV) / (air_mass * c_v); // Change in temperature
     temperature += dT;
 
     valves();

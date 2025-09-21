@@ -1,5 +1,5 @@
-all: main.o Engine.o EngineVisualization.o ui.o TwoStroke.o
-	g++ -o main.out Engine.o EngineVisualization.o main.o ui.o TwoStroke.o -lsfml-graphics -lsfml-window -lsfml-system
+all: main.o Engine.o EngineVisualization.o ui.o TwoStroke.o FourStroke.o
+	g++ -o main.out Engine.o EngineVisualization.o main.o ui.o TwoStroke.o FourStroke.o -lsfml-graphics -lsfml-window -lsfml-system
 
 ui.o: src/ui.cpp include/ui.h
 	g++ -c src/ui.cpp -lsfml-graphics -lsfml-window -lsfml-system
@@ -12,6 +12,9 @@ EngineVisualization.o: EngineVisualization.h EngineVisualization.cpp
 
 TwoStroke.o: TwoStroke.cpp TwoStroke.h Engine.h
 	g++ -c TwoStroke.cpp
+
+FourStroke.o: FourStroke.cpp FourStroke.h Engine.h
+	g++ -c FourStroke.cpp
 
 main.o: main.cpp Engine.h
 	g++ -c main.cpp -lsfml-graphics -lsfml-window -lsfml-system
