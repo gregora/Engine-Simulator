@@ -4,6 +4,7 @@
 class EngineVisualization: public sf::Transformable, public sf::Drawable {
 public:
     EngineVisualization(TwoStroke& engine);
+    void init();
 
     void update();
 
@@ -15,6 +16,8 @@ protected:
 private:
     TwoStroke& engine;
     sf::RectangleShape piston;
+    sf::RectangleShape piston_seal;
+    sf::RectangleShape piston_seal2;
     sf::RectangleShape volume;
     sf::RectangleShape rod;
     sf::Sprite counterweight;

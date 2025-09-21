@@ -15,6 +15,7 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
     visualization.piston_height = 0.03f;
+    visualization.init();
 
     Gauge g("RPM", 0, 6000);
     g.setPosition(30, 420);
