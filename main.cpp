@@ -6,11 +6,16 @@
 
 int main(){
 
+    float playback_speed = 0.1f;
+    float framerate = 60.0f;
+
+
     // Yamaha RX100 engine parameters
     TwoStroke engine;
     engine.piston_area = 0.00196;
     engine.crank_radius = 0.025;
     engine.cilinder_height = 0.0583;
+    engine.init();
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
@@ -42,9 +47,6 @@ int main(){
     float t = 0;
     float dt = 0.0003f;
 
-    float playback_speed = 0.1f;
-
-    float framerate = 60.0f;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -54,7 +56,7 @@ int main(){
                 window.close();
         }
 
-        if (t < 1.0f) {
+        if (t < 0.5f) {
             engine.apply_torque(20.0f);
         }else{
             engine.apply_torque(0.0f);
