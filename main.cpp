@@ -14,7 +14,7 @@ int main(){
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
-    visualization.piston_height = 0.03f;
+    visualization.piston_height = 0.04f;
     visualization.init();
 
     Gauge g("RPM", 0, 6000);
@@ -32,12 +32,12 @@ int main(){
 
     sf::Text playback_text;
     playback_text.setFont(font);
-    playback_text.setCharacterSize(24);
+    playback_text.setCharacterSize(28);
     playback_text.setFillColor(sf::Color::White);
     playback_text.setPosition(10, 50);
 
     visualization.setPosition(400, 200);
-    visualization.setScale(1.5f, 1.5f);
+    visualization.setScale(2.0f, 2.0f);
 
     float t = 0;
     float dt = 0.0003f;
@@ -69,9 +69,13 @@ int main(){
 
         // sleep
         sf::sleep(sf::milliseconds(16));
+        char text1[100];
+        sprintf(text1, "Time: %.3fs", t);
+        time_text.setString(text1);
 
-        time_text.setString("Time: " + std::to_string(t) + "s");
-        playback_text.setString(std::to_string(playback_speed) + "x");
+        char text2[100];
+        sprintf(text2, "%.2fx", playback_speed);
+        playback_text.setString(text2);
 
         g.value = 30 * engine.angular_velocity / M_PI;
 

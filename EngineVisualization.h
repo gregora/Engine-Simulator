@@ -20,6 +20,7 @@ private:
     sf::RectangleShape piston_seal2;
     sf::RectangleShape volume;
     sf::RectangleShape rod;
+    sf::CircleShape rod_end;
     sf::Sprite counterweight;
     sf::Texture counterweight_texture;
     sf::RectangleShape cilinder;
