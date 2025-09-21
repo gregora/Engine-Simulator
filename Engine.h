@@ -1,5 +1,5 @@
-#ifndef TWO_STROKE_H
-#define TWO_STROKE_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include "math.h"
 
@@ -9,7 +9,7 @@
 #define air_density 1.225 // kg/m^3
 #define fuel_energy_density 46.7e6 // J/kg
 
-class TwoStroke {
+class Engine {
 public:
     void init();
     void apply_torque(float torque);
@@ -38,4 +38,4 @@ private:
     bool fuel_injected = false;
 };
 
-#endif // TWO_STROKE_H
+#endif // ENGINE_H

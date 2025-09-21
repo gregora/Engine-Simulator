@@ -1,9 +1,9 @@
 #include <SFML/Graphics.hpp>
-#include "TwoStroke.h"
+#include "Engine.h"
 
 class EngineVisualization: public sf::Transformable, public sf::Drawable {
 public:
-    EngineVisualization(TwoStroke& engine);
+    EngineVisualization(Engine& engine);
     void init();
 
     void update();
@@ -14,7 +14,7 @@ protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
-    TwoStroke& engine;
+    Engine& engine;
     sf::RectangleShape piston;
     sf::RectangleShape piston_seal;
     sf::RectangleShape piston_seal2;

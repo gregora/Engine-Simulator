@@ -1,6 +1,6 @@
 #include "EngineVisualization.h"
 
-EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
+EngineVisualization::EngineVisualization(Engine& engine) : engine(engine) {
     init();
 }
 
