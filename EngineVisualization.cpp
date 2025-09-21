@@ -1,8 +1,10 @@
 #include "EngineVisualization.h"
 
 EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
-    // Initialize the visualization
+    
+}
 
+void EngineVisualization::update() {
     float piston_width = sqrt(engine.piston_area / M_PI) * 2;
 
     cilinder.setSize(sf::Vector2f(500 * piston_width, engine.cilinder_height * 500 + piston_height * 500));
@@ -31,11 +33,8 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
     counterweight.setScale(counterweight_scale, counterweight_scale);
     counterweight.setPosition(0, engine.cilinder_height*500 + 500*engine.crank_radius + piston_height*500 / 2);
 
-}
 
-void EngineVisualization::update() {
     float x = ((1 + sin(engine.angle)) * engine.crank_radius * 500);
-    float piston_width = 2 * sqrt(engine.piston_area / M_PI);
 
     volume.setSize(sf::Vector2f(piston_width * 500, (engine.cilinder_height * 500 - x)));
     volume.setPosition(0, 0);

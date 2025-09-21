@@ -5,12 +5,16 @@
 #include "include/ui.h"
 
 int main(){
+
+    // Yamaha RX100 engine parameters
     TwoStroke engine;
-    engine.piston_area = 0.003;
-    engine.crank_radius = 0.035;
+    engine.piston_area = 0.00196;
+    engine.crank_radius = 0.025;
+    engine.cilinder_height = 0.0583;
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
+    visualization.piston_height = 0.03f;
 
     Gauge g("RPM", 0, 6000);
     g.setPosition(30, 420);
