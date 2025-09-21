@@ -16,7 +16,7 @@ private:
     TwoStroke& engine;
     sf::RectangleShape piston;
     sf::RectangleShape volume;
-    sf::RectangleShape crank;
+    sf::RectangleShape rod;
     sf::Sprite counterweight;
     sf::Texture counterweight_texture;
     sf::RectangleShape cilinder;

@@ -18,9 +18,9 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
 
     volume.setOrigin(500 * piston_width / 2, 0);
 
-    crank.setFillColor(sf::Color(70, 70, 70));
-    crank.setSize(sf::Vector2f(piston_width / 5 * 500, - engine.cilinder_height * 500 - 2 * engine.crank_radius * 500));
-    crank.setOrigin(piston_width / 10 * 500, 0);
+    rod.setFillColor(sf::Color(70, 70, 70));
+    rod.setSize(sf::Vector2f(piston_width / 3 * 500, 2 * engine.crank_radius * 500));
+    rod.setOrigin(piston_width / 6 * 500, 0);
 
     counterweight_texture.loadFromFile("textures/counterweight.png");
 
@@ -29,7 +29,7 @@ EngineVisualization::EngineVisualization(TwoStroke& engine) : engine(engine) {
 
     float counterweight_scale = 500 * 2 * engine.crank_radius / counterweight_texture.getSize().y;
     counterweight.setScale(counterweight_scale, counterweight_scale);
-    counterweight.setPosition(0, 2*engine.cilinder_height * 500 + piston_height*500 + engine.crank_radius * 500);
+    counterweight.setPosition(0, engine.cilinder_height*500 + 500*engine.crank_radius + piston_height*500 / 2);
 
 }
 
@@ -42,10 +42,10 @@ void EngineVisualization::update() {
 
     piston.setPosition(0, engine.cilinder_height*500 - x);
 
-    float crank_angle = atan2(engine.cilinder_height, engine.crank_radius * cos(engine.angle) * 0.5);
+    float rod_angle = atan2(engine.cilinder_height, engine.crank_radius * cos(engine.angle) * 0.8);
 
-    crank.setRotation(crank_angle * 180 / M_PI + 90);
-    crank.setPosition(0, engine.cilinder_height*500 + piston_height*500 - x);
+    rod.setRotation(rod_angle * 180 / M_PI + 90);
+    rod.setPosition(cos(engine.angle) * 500 * engine.crank_radius * 0.8, 2*engine.crank_radius*500 + engine.cilinder_height*500 + piston_height/2*500 - x);
 
     counterweight.setRotation(- engine.angle * 180 / M_PI);
 
@@ -65,9 +65,9 @@ void EngineVisualization::update() {
 void EngineVisualization::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     states.transform *= getTransform();
     target.draw(cilinder, states);
-    target.draw(crank, states);
-    target.draw(piston, states);
     target.draw(volume, states);
+    target.draw(rod, states);
     target.draw(counterweight, states);
+    target.draw(piston, states);
 
 }

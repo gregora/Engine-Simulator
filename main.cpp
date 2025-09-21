@@ -6,6 +6,8 @@
 
 int main(){
     TwoStroke engine;
+    engine.piston_area = 0.003;
+    engine.crank_radius = 0.035;
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
