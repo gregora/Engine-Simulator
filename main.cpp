@@ -6,23 +6,65 @@
 #include "EngineVisualization.h"
 #include "include/ui.h"
 
-int main(){
+int main(int argc, char** argv) {
 
-    float playback_speed = 0.1f;
+    float playback_speed = 0.02f;
     float framerate = 60.0f;
 
+    int engine_type = 0;
+    Engine* engine_ptr = nullptr;
+
+    if (argc > 1) {
+        engine_type = atoi(argv[1]);
+    }
+
+    if (engine_type == 0) {
+        printf("Using Yamaha RX100 two-stroke engine model\n");
+    } else if (engine_type == 1) {
+        printf("Using Honda K20 four-stroke engine model\n");
+    } else {
+        printf("Unknown engine type %d\n", engine_type);
+        return 1;
+    }
 
     // Yamaha RX100 engine parameters
-    FourStroke engine;
-    engine.piston_area = 0.00196;
-    engine.crank_radius = 0.025;
-    engine.cilinder_height = 0.0583;
-    engine.fuel_injection_mass = 3.08641975e-7;
-    engine.init();
+    TwoStroke rx100;
+    rx100.piston_area = 0.00196;
+    rx100.crank_radius = 0.025;
+    rx100.cilinder_height = 0.0583;
+    rx100.fuel_injection_mass = 3.08641975e-7;
+    rx100.flywheel_inertia = 0.1;
+    rx100.flywheel_damping = 0.007;
+    rx100.init();
+
+    // Honda K20 engine parameters
+    FourStroke k20;
+    k20.piston_area = 0.0058088;
+    k20.crank_radius = 0.0430;
+    k20.cilinder_height = 0.09419;
+    k20.fuel_injection_mass = 3.08641975e-7;
+    k20.flywheel_inertia = 0.25;
+    k20.flywheel_damping = 0.007;
+    k20.init();
+
+
+    if (engine_type == 0) {
+        engine_ptr = (Engine*) &rx100;
+    } else if (engine_type == 1) {
+        engine_ptr = (Engine*) &k20;
+    }
+
+    Engine& engine = *engine_ptr;
+
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Simulation");
     EngineVisualization visualization(engine);
-    visualization.piston_height = 0.04f;
+    if(engine_type == 0) {
+        visualization.piston_height = 0.04f;
+    } else if (engine_type == 1) {
+        visualization.piston_height = 0.06f;
+    }
+
     visualization.init();
 
     Gauge g("RPM", 0, 6000);
@@ -32,13 +74,13 @@ int main(){
     int chart_length = 1000;
 
     Chart pressure_chart("Pressure", 0, 4 * M_PI, 0, 9000000, 200, 150);
-    pressure_chart.setPosition(500, 30);
+    pressure_chart.setPosition(570, 30);
     pressure_chart.values_x.reserve(chart_length);
     pressure_chart.values_y.reserve(chart_length);
     pressure_chart.line_color = sf::Color(0, 200, 200);
 
     Chart temperature_chart("Temperature", 0, 4 * M_PI, 200, 2000, 200, 150);
-    temperature_chart.setPosition(500, 200);
+    temperature_chart.setPosition(570, 200);
     temperature_chart.values_x.reserve(chart_length);
     temperature_chart.values_y.reserve(chart_length);
     temperature_chart.line_color = sf::Color(200, 100, 0);
@@ -75,9 +117,13 @@ int main(){
                 window.close();
         }
 
-        if (t < 0.5f) {
-            engine.apply_torque(20.0f);
-        }else{
+        if (engine.angular_velocity < 2 * M_PI * 1000.0 / 60.0) {
+            if (engine_type == 0) {
+                engine.apply_torque(20.0f);
+            } else if (engine_type == 1) {
+                engine.apply_torque(70.0f);
+            }
+        } else {
             engine.apply_torque(0.0f);
         }
 

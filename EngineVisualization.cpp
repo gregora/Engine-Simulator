@@ -30,13 +30,13 @@ void EngineVisualization::init() {
 
     volume.setOrigin(500 * piston_width / 2, 0);
 
-    rod.setFillColor(sf::Color(70, 70, 70));
+    rod.setFillColor(sf::Color(60, 60, 60));
     rod.setSize(sf::Vector2f(piston_width / 3 * 500, 2 * engine.crank_radius * 500));
     rod.setOrigin(piston_width / 6 * 500, 0);
 
     rod_end.setRadius(piston_width * 500 / 6);
     rod_end.setOrigin(piston_width * 500 / 6, piston_width * 500 / 6);
-    rod_end.setFillColor(sf::Color(70, 70, 70));
+    rod_end.setFillColor(sf::Color(60, 60, 60));
 
     counterweight_texture.loadFromFile("textures/counterweight.png");
 
