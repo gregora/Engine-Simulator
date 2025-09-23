@@ -32,9 +32,9 @@ int main(int argc, char** argv) {
     rx100.piston_area = 0.00196;
     rx100.crank_radius = 0.025;
     rx100.cilinder_height = 0.0583;
-    rx100.fuel_injection_mass = 2.1e-7;
+    rx100.fuel_injection_mass = 1.1e-6;
     rx100.flywheel_inertia = 0.1;
-    rx100.flywheel_damping = 0.007;
+    rx100.flywheel_damping = 0.04;
     rx100.init();
 
     // Honda K20 engine parameters
@@ -42,9 +42,9 @@ int main(int argc, char** argv) {
     k20.piston_area = 0.0058088;
     k20.crank_radius = 0.0430;
     k20.cilinder_height = 0.09419;
-    k20.fuel_injection_mass = 3.5e-7;
+    k20.fuel_injection_mass = 2.1e-6;
     k20.flywheel_inertia = 0.25;
-    k20.flywheel_damping = 0.007;
+    k20.flywheel_damping = 0.04;
     k20.init();
 
 
