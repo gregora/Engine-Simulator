@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv) {
 
-    float playback_speed = 0.02f;
+    float playback_speed = 0.1f;
     float framerate = 60.0f;
 
     int engine_type = 0;
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
     rx100.piston_area = 0.00196;
     rx100.crank_radius = 0.025;
     rx100.cilinder_height = 0.0583;
-    rx100.fuel_injection_mass = 3.08641975e-7;
+    rx100.fuel_injection_mass = 2.1e-7;
     rx100.flywheel_inertia = 0.1;
     rx100.flywheel_damping = 0.007;
     rx100.init();
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     k20.piston_area = 0.0058088;
     k20.crank_radius = 0.0430;
     k20.cilinder_height = 0.09419;
-    k20.fuel_injection_mass = 3.08641975e-7;
+    k20.fuel_injection_mass = 3.5e-7;
     k20.flywheel_inertia = 0.25;
     k20.flywheel_damping = 0.007;
     k20.init();
@@ -73,13 +73,13 @@ int main(int argc, char** argv) {
 
     int chart_length = 1000;
 
-    Chart pressure_chart("Pressure", 0, 4 * M_PI, 0, 9000000, 200, 150);
+    Chart pressure_chart("Pressure", 0, 4 * M_PI, ambient_pressure, 9000000, 200, 150);
     pressure_chart.setPosition(570, 30);
     pressure_chart.values_x.reserve(chart_length);
     pressure_chart.values_y.reserve(chart_length);
     pressure_chart.line_color = sf::Color(0, 200, 200);
 
-    Chart temperature_chart("Temperature", 0, 4 * M_PI, 200, 2000, 200, 150);
+    Chart temperature_chart("Temperature", 0, 4 * M_PI, 293, 2000, 200, 150);
     temperature_chart.setPosition(570, 200);
     temperature_chart.values_x.reserve(chart_length);
     temperature_chart.values_y.reserve(chart_length);
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
     visualization.setScale(2.0f, 2.0f);
 
     float t = 0;
-    float dt = 0.0003f;
+    float dt = 0.00003f;
 
     float delta_angle = 4.0f * M_PI / chart_length; // for charts
     float last_angle = -delta_angle;
@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
                 window.close();
         }
 
-        if (engine.angular_velocity < 2 * M_PI * 1000.0 / 60.0) {
+        if (engine.angular_velocity < 2 * M_PI * 1000.0 / 60.0 && t < 0.5) {
             if (engine_type == 0) {
                 engine.apply_torque(20.0f);
             } else if (engine_type == 1) {

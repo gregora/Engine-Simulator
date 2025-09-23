@@ -15,7 +15,7 @@ void TwoStroke::valves() {
     }
 
     //  exhaust + intake
-    if(cycle_position > 2.0/2 * M_PI && cycle_position < 3.0/2 * M_PI) {
+    if(cycle_position > 2.8/2 * M_PI && cycle_position < 3.2/2 * M_PI) {
         temperature = 298;
         air_mass = (V * air_density); // Reset air mass in the cylinder
     }

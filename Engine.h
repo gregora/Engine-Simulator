@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include "math.h"
+#include "stdio.h"
 
 #define ambient_pressure 101325.0
 #define R_spec 287.05 // Specific gas constant for air in J/(kg·K)
