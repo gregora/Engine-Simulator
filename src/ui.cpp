@@ -165,6 +165,61 @@ void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 
+Chart::Chart(std::string name, float min_x, float max_x, float min_y, float max_y, float view_width, float view_height){
+	this -> name = name;
+	this -> min_x = min_x;
+	this -> max_x = max_x;
+	this -> min_y = min_y;
+	this -> max_y = max_y;
+	this -> view_width = view_width;
+	this -> view_height = view_height;
+
+	background.setSize(sf::Vector2f(view_width, view_height));
+	background.setFillColor(sf::Color(50, 50, 50, 200));
+	background.setOrigin(view_width / 2, view_height / 2);
+	background.setPosition(view_width / 2, view_height / 2);
+
+	if(!font.loadFromFile("fonts/Prototype.ttf")){
+		printf("WARNING: Chart object could not load \"fonts/Prototype.ttf\"");
+	}
+
+}
+
+Chart::~Chart(){}
+
+void Chart::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+
+	target.draw(background, states.transform*getTransform());
+
+	sf::Text text;
+	text.setFont(font);
+	text.setFillColor(sf::Color(170, 170, 170));
+	text.setString(name.c_str());
+	text.setCharacterSize(20);
+	sf::FloatRect bounds = text.getLocalBounds();
+	text.setOrigin(bounds.width / 2, bounds.height / 2);
+	text.setPosition(view_width / 2, 20);
+	target.draw(text, states.transform*getTransform());
+
+
+	if(values_x.size() < 2 || values_y.size() < 2){
+		return;
+	}
+
+	sf::VertexArray lines(sf::LineStrip, values_x.size());
+
+	for(size_t i = 0; i < values_x.size(); i++){
+		float x = (values_x[i] - min_x) / (max_x - min_x) * view_width;
+		float y = view_height - (values_y[i] - min_y) / (max_y - min_y) * view_height;
+
+		lines[i].position = sf::Vector2f(x, y);
+		lines[i].color = line_color;
+	}
+
+	target.draw(lines, states.transform*getTransform());
+
+}
+
 
 FPS::FPS(){
 	c.restart();

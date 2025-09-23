@@ -29,6 +29,20 @@ int main(){
     g.setPosition(30, 420);
     g.scale(0.35f, 0.35f);
 
+    int chart_length = 1000;
+
+    Chart pressure_chart("Pressure", 0, 4 * M_PI, 0, 9000000, 200, 150);
+    pressure_chart.setPosition(500, 30);
+    pressure_chart.values_x.reserve(chart_length);
+    pressure_chart.values_y.reserve(chart_length);
+    pressure_chart.line_color = sf::Color(0, 200, 200);
+
+    Chart temperature_chart("Temperature", 0, 4 * M_PI, 200, 2000, 200, 150);
+    temperature_chart.setPosition(500, 200);
+    temperature_chart.values_x.reserve(chart_length);
+    temperature_chart.values_y.reserve(chart_length);
+    temperature_chart.line_color = sf::Color(200, 100, 0);
+
     sf::Font font;
     font.loadFromFile("fonts/Prototype.ttf");
     
@@ -50,6 +64,8 @@ int main(){
     float t = 0;
     float dt = 0.0003f;
 
+    float delta_angle = 4.0f * M_PI / chart_length; // for charts
+    float last_angle = -delta_angle;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -70,7 +86,37 @@ int main(){
         for (int i = 0; i < updates; i++) {
             t += dt;
             engine.update(dt);
+
+            if (engine.angle - last_angle >= delta_angle) {
+
+                last_angle = engine.angle;
+
+                pressure_chart.values_x.push_back(engine.angle);
+                pressure_chart.values_y.push_back(engine.pressure);
+                temperature_chart.values_x.push_back(engine.angle);
+                temperature_chart.values_y.push_back(engine.temperature);
+
+                // delete old values
+                for(int j = 0; j < pressure_chart.values_x.size() - chart_length; j++){
+                    if(pressure_chart.values_x.at(j) < engine.angle - 4 * M_PI){
+                        pressure_chart.values_x.erase(pressure_chart.values_x.begin());
+                        pressure_chart.values_y.erase(pressure_chart.values_y.begin());
+
+                        temperature_chart.values_x.erase(temperature_chart.values_x.begin());
+                        temperature_chart.values_y.erase(temperature_chart.values_y.begin());
+                    }else{
+                        break;
+                    }
+                }
+
+                pressure_chart.min_x = pressure_chart.values_x.back() - 4*M_PI;
+                pressure_chart.max_x = pressure_chart.values_x.back();
+                temperature_chart.min_x = temperature_chart.values_x.back() - 4*M_PI;
+                temperature_chart.max_x = temperature_chart.values_x.back();
+
+            }
         }
+
 
         // sleep
         sf::sleep(sf::milliseconds(16));
@@ -91,6 +137,8 @@ int main(){
         window.draw(time_text);
         window.draw(playback_text);
         window.draw(g);
+        window.draw(pressure_chart);
+        window.draw(temperature_chart);
         window.display();
     
     }
