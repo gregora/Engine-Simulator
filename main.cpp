@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
 #include "include/ui.h"
+#include "include/Video.h"
 
 int main(int argc, char** argv) {
 
@@ -15,12 +16,21 @@ int main(int argc, char** argv) {
     int engine_type = 0;
     Engine* engine_ptr = nullptr;
 
+    bool render = false;
+    Video* video = NULL;
+
     for(int i = 0; i < argc; i++){
         if (strcmp(argv[i], "-engine") == 0 && i + 1 < argc) {
             engine_type = atof(argv[i + 1]);
+        } else if (strcmp(argv[i], "-render") == 0 && i + 1 < argc) {
+            render = atof(argv[i + 1]) != 0;
         }
     }
 
+
+    if (render) {
+        video = new Video(800, 600, framerate, "render/output.mp4");
+    }
 
     // Yamaha RX100 engine parameters
     TwoStroke rx100;
@@ -108,8 +118,12 @@ int main(int argc, char** argv) {
         sf::Event event;
 
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed){
                 window.close();
+                if (render) {
+                    video->release();
+                }
+            }
         }
 
         if (engine.angular_velocity < 2 * M_PI * 1000.0 / 60.0 && t < 0.5) {
@@ -181,6 +195,14 @@ int main(int argc, char** argv) {
         window.draw(pressure_chart);
         window.draw(temperature_chart);
         window.display();
+
+        if (render) {
+            sf::Texture texture;
+            texture.create(800, 600);
+            texture.update(window);
+            sf::Image screenshot = texture.copyToImage();
+            video->write((uint8_t*)screenshot.getPixelsPtr());
+        }
     
     }
 

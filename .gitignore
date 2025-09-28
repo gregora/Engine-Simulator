@@ -1,3 +1,9 @@
+# render files
+render/*.mp4
+
+# vscode settings
+.vscode/
+
 # Prerequisites
 *.d
 

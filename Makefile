@@ -1,5 +1,8 @@
-all: main.o Engine.o EngineVisualization.o ui.o TwoStroke.o FourStroke.o
-	g++ -o main.out Engine.o EngineVisualization.o main.o ui.o TwoStroke.o FourStroke.o -lsfml-graphics -lsfml-window -lsfml-system
+CPPFLAGS = $(shell pkg-config --cflags opencv4)
+LDLIBS = $(shell pkg-config --libs opencv4)
+
+all: main.o Engine.o EngineVisualization.o ui.o TwoStroke.o FourStroke.o Video.o
+	g++ -o main.out Engine.o EngineVisualization.o main.o ui.o TwoStroke.o FourStroke.o Video.o -lsfml-graphics -lsfml-window -lsfml-system $(CPPFLAGS) $(LDLIBS) -std=c++11 
 
 ui.o: src/ui.cpp include/ui.h
 	g++ -c src/ui.cpp -lsfml-graphics -lsfml-window -lsfml-system
@@ -17,7 +20,10 @@ FourStroke.o: FourStroke.cpp FourStroke.h Engine.h
 	g++ -c FourStroke.cpp
 
 main.o: main.cpp Engine.h
-	g++ -c main.cpp -lsfml-graphics -lsfml-window -lsfml-system
+	g++ -c main.cpp -lsfml-graphics -lsfml-window -lsfml-system $(CPPFLAGS) $(LDLIBS)
+
+Video.o: src/Video.cpp include/Video.h
+	g++ -c src/Video.cpp $(CPPFLAGS) $(LDLIBS) -std=c++11 
 
 clean:
 	rm -f *.o main.out
