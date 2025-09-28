@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "TwoStroke.h"
 #include "FourStroke.h"
+#include "Dynamometer.h"
 #include <string.h>
 #include <stdio.h>
 #include <SFML/Graphics.hpp>

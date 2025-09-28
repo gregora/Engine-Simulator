@@ -33,6 +33,8 @@ public:
 
     float flywheel_inertia = 0.1; // kg*m^2
 
+    float fuel_injection_mass = 0.0; // kg
+
     float flywheel_damping = 0.01; // Damping coefficient for the flywheel
 };
 
