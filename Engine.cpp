@@ -33,6 +33,10 @@ void Engine::update(float dt) {
 
     float total_torque = -piston_force*crank_radius*cos(angle) + external_torque - (flywheel_damping * angular_velocity);
 
+    if(abs(angular_velocity) > 0.0001){
+        total_torque += - angular_velocity / abs(angular_velocity) * friction * crank_radius;
+    }
+
     angular_velocity += (total_torque / flywheel_inertia) * dt;
     angle += angular_velocity * dt;
 

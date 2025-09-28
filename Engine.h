@@ -35,6 +35,7 @@ public:
 
     float fuel_injection_mass = 0.0; // kg
 
+    float friction = 400.0; // Cilinder friction in N
     float flywheel_damping = 0.01; // Damping coefficient for the flywheel
 };
 

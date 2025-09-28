@@ -11,7 +11,7 @@
 
 int main(int argc, char** argv) {
 
-    float playback_speed = 0.1f;
+    float playback_speed = 1.0f;
     float framerate = 60.0f;
 
     int engine_type = 0;
@@ -33,14 +33,15 @@ int main(int argc, char** argv) {
         video = new Video(800, 600, framerate, "render/output.mp4");
     }
 
+    float min_fuel_injection_mass = 0;
+
     // Yamaha RX100 engine parameters
     TwoStroke rx100;
     rx100.piston_area = 0.00196;
     rx100.crank_radius = 0.025;
     rx100.cilinder_height = 0.0583;
-    rx100.fuel_injection_mass = 1.1e-6;
     rx100.flywheel_inertia = 0.1;
-    rx100.flywheel_damping = 0.04;
+    rx100.flywheel_damping = 0.1;
     rx100.init();
 
     // Honda K20 engine parameters
@@ -48,15 +49,16 @@ int main(int argc, char** argv) {
     k20.piston_area = 0.0058088;
     k20.crank_radius = 0.0430;
     k20.cilinder_height = 0.09419;
-    k20.fuel_injection_mass = 2.1e-6;
     k20.flywheel_inertia = 0.25;
-    k20.flywheel_damping = 0.04;
+    k20.flywheel_damping = 0.1;
     k20.init();
 
 
     if (engine_type == 0) {
+        min_fuel_injection_mass = 3.1e-6;
         engine_ptr = (Engine*) &rx100;
     } else if (engine_type == 1) {
+        min_fuel_injection_mass = 7.1e-6;
         engine_ptr = (Engine*) &k20;
     }
 
@@ -73,19 +75,29 @@ int main(int argc, char** argv) {
 
     visualization.init();
 
+    float throttle = 0.0f;
+    Bar throttle_bar("Throttle");
+    throttle_bar.horizontal = false;
+    throttle_bar.setPosition(730, 460);
+    throttle_bar.setScale(0.8, 0.8);
+
+    Button starter('S');
+    starter.setPosition(580, 410);
+    starter.setScale(1, 1);
+
     Gauge g("RPM", 0, 6000);
     g.setPosition(30, 420);
     g.scale(0.35f, 0.35f);
 
     int chart_length = 1000;
 
-    Chart pressure_chart("Pressure", 0, 4 * M_PI, ambient_pressure, 9000000, 200, 150);
+    Chart pressure_chart("Pressure", 0, 4 * M_PI, ambient_pressure, 20000000, 200, 150);
     pressure_chart.setPosition(570, 30);
     pressure_chart.values_x.reserve(chart_length);
     pressure_chart.values_y.reserve(chart_length);
     pressure_chart.line_color = sf::Color(0, 200, 200);
 
-    Chart temperature_chart("Temperature", 0, 4 * M_PI, 293, 2000, 200, 150);
+    Chart temperature_chart("Temperature", 0, 4 * M_PI, 293, 10000, 200, 150);
     temperature_chart.setPosition(570, 200);
     temperature_chart.values_x.reserve(chart_length);
     temperature_chart.values_y.reserve(chart_length);
@@ -125,16 +137,31 @@ int main(int argc, char** argv) {
                     video->release();
                 }
             }
+            // scroll wheel as a throttle
+            if (event.type == sf::Event::MouseWheelScrolled) {
+                throttle += event.mouseWheelScroll.delta / 20;
+            
+                if (throttle > 1.0f) {
+                    throttle = 1.0f;
+                }else if (throttle < 0.0f) {
+                    throttle = 0.0f;
+                }
+
+                engine.fuel_injection_mass = (5.0f * throttle) * min_fuel_injection_mass;
+            }
         }
 
-        if (engine.angular_velocity < 2 * M_PI * 1000.0 / 60.0 && t < 0.5) {
+        // check if s is pressed
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             if (engine_type == 0) {
-                engine.apply_torque(20.0f);
+                engine.apply_torque(30.0f);
             } else if (engine_type == 1) {
-                engine.apply_torque(70.0f);
+                engine.apply_torque(60.0f);
             }
-        } else {
+            starter.active = true;
+        }else {
             engine.apply_torque(0.0f);
+            starter.active = false;
         }
 
         int updates = (float) (playback_speed / framerate / dt);
@@ -186,6 +213,8 @@ int main(int argc, char** argv) {
 
         g.value = 30 * engine.angular_velocity / M_PI;
 
+        throttle_bar.value = throttle;
+
         visualization.update();  // Update the visualization
         window.clear();
     
@@ -195,6 +224,8 @@ int main(int argc, char** argv) {
         window.draw(g);
         window.draw(pressure_chart);
         window.draw(temperature_chart);
+        window.draw(throttle_bar);
+        window.draw(starter);
         window.display();
 
         if (render) {

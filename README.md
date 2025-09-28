@@ -23,3 +23,5 @@ The demo (`main.out`) supports the following optional arguments:
 
 * `-engine [0/1]` - engine type, 0 = Yamaha RX100, 1 = Honda K20
 * `-render [0/1]` - save video to `render/` folder or not
+
+Start the engine by increasing the throttle (mouse wheel) and engaging the starter motor (s key).
