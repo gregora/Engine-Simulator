@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "TwoStroke.h"
 #include "FourStroke.h"
+#include <string.h>
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "EngineVisualization.h"
@@ -14,18 +15,12 @@ int main(int argc, char** argv) {
     int engine_type = 0;
     Engine* engine_ptr = nullptr;
 
-    if (argc > 1) {
-        engine_type = atoi(argv[1]);
+    for(int i = 0; i < argc; i++){
+        if (strcmp(argv[i], "-engine") == 0 && i + 1 < argc) {
+            engine_type = atof(argv[i + 1]);
+        }
     }
 
-    if (engine_type == 0) {
-        printf("Using Yamaha RX100 two-stroke engine model\n");
-    } else if (engine_type == 1) {
-        printf("Using Honda K20 four-stroke engine model\n");
-    } else {
-        printf("Unknown engine type %d\n", engine_type);
-        return 1;
-    }
 
     // Yamaha RX100 engine parameters
     TwoStroke rx100;
