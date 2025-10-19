@@ -11,7 +11,7 @@
 
 int main(int argc, char** argv) {
 
-    float playback_speed = 1.0f;
+    float playback_speed = 0.1f;
     float framerate = 60.0f;
 
     int engine_type = 0;

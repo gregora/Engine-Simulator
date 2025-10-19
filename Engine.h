@@ -7,6 +7,7 @@
 #define ambient_pressure 101325.0
 #define R_spec 287.05 // Specific gas constant for air in J/(kg·K)
 #define c_v 718.0 // Specific heat capacity at constant volume for air in J/(kg·K)
+#define c_p 1005.0 // Specific heat capacity at constant pressure for air in J/(kg·K)
 #define air_density 1.225 // kg/m^3
 #define fuel_energy_density 46.7e6 // J/kg
 

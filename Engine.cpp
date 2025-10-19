@@ -40,8 +40,7 @@ void Engine::update(float dt) {
     angular_velocity += (total_torque / flywheel_inertia) * dt;
     angle += angular_velocity * dt;
 
-    float dT = - (pressure * dV) / (air_mass * c_v); // Change in temperature
-    temperature += dT;
+    temperature = temperature * pow(V / (V + dV), c_p / c_v - 1); // Adiabatic process
 
     valves();
 
